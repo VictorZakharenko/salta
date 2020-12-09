@@ -33,20 +33,20 @@ def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
-@bp.route('/register', methods=['GET','POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        email = form.email.data
-        user = User(email=email)
-        user.set_password(form.password.data)
-        user.active = True
-        db.session.add(user)
-        db.session.commit()
-        # user_datastore.create_user(email=email, name=name, password=form.password.data)
-        flash('Congratulations!')
-        return redirect(url_for('auth.login'))
-    return render_template('auth/register.html', title='Register', form=form)
+# @bp.route('/register', methods=['GET','POST'])
+# def register():
+#     form = RegistrationForm()
+#     if form.validate_on_submit():
+#         email = form.email.data
+#         user = User(email=email)
+#         user.set_password(form.password.data)
+#         user.active = True
+#         db.session.add(user)
+#         db.session.commit()
+#         # user_datastore.create_user(email=email, name=name, password=form.password.data)
+#         flash('Congratulations!')
+#         return redirect(url_for('auth.login'))
+#     return render_template('auth/register.html', title='Register', form=form)
 
 
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])

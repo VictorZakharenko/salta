@@ -15,7 +15,7 @@ class MyAdminIndexView(AdminIndexView):
         if not current_user.is_authenticated:
             return False
         current_roles = [role.name for role in current_user.roles]
-        return True
+        return ('admin' in current_roles)
 
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('auth.login'))
