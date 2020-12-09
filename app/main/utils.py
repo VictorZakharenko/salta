@@ -29,7 +29,7 @@ def get_html_dic(ready_dic):
 	for key, value in ready_dic.items():
 		substitute_table_components(next(tables), value)
 
-	return {'plane_links_html' : soup.getText}
+	return {'plane_links_html' : soup.find('table').getText}
 
 def get_ready_dic(root, form_data):
 	ready_dic = {}
