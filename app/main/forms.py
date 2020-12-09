@@ -10,4 +10,4 @@ class GroupIdsForm(FlaskForm):
     group_id4 = StringField('group_id', validators=[DataRequired(), Regexp('^[0-9]+$', message='Only numbers')])
     group_id5 = StringField('group_id', validators=[DataRequired(), Regexp('^[0-9]+$', message='Only numbers')])
     group_id6 = StringField('group_id', validators=[DataRequired(), Regexp('^[0-9]+$', message='Only numbers')])
-    submit = SubmitField('Register')
+    submit = SubmitField('Go')
