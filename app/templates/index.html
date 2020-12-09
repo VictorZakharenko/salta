@@ -1,0 +1,22 @@
+<!-- templates/index.html -->
+
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<h1 class="title">
+  Главная страничка
+</h1>
+<h2 class="subtitle">
+</h2>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(group_ids_form) }}
+        </div>
+    </div>
+    <div>
+    	{% if result_html %}
+    		{{result_html|safe}}
+    	{% endif %}
+    </div>
+{% endblock %}

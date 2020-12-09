@@ -1,0 +1,4 @@
+FLASK_APP=run.py
+SECRET_KEY=qkm4km13lk4@
+FLASK_ENV=development
+FLASK_DEBUG=1

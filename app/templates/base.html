@@ -1,0 +1,51 @@
+<!-- templates/base.html -->
+{% extends 'bootstrap/base.html' %}
+
+{% block navbar %}
+  <nav class="navbar navbar-default grmax-navbar">
+      <div class="container center">
+      <ul class="nav navbar-nav navbar-left">
+        <li>
+          <a class="navbar-brand" href="{{ url_for('main.index') }}">
+          <img src="{{ url_for('static', filename='img/logo.svg') }}" height="19px" alt="Logo">
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {% if current_user.is_anonymous %}
+        <li>
+          <a href="{{ url_for('auth.login') }}" class="navbar-item">
+            Войти
+          </a>
+        </li>
+        <li>
+        <a href="{{ url_for('auth.register') }}" class="navbar-item">
+            Зарегистрироваться
+        </a>
+        </li>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <li>
+        <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+            Выйти
+        </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+{% endblock %}
+{% block content %}
+  <div class="container grmax-container">
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-info" role="alert">{{ message }}</div>
+          {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+      {# application content needs to be provided in the app_content block #}
+      {% block app_content %}{% endblock %}
+  </div>
+{% endblock %}
