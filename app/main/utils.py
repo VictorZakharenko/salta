@@ -17,6 +17,7 @@ def build_root():
 def build_it(form_data):
 	root = build_root()
 	ready_dic = get_ready_dic(root, form_data)
+	current_app.logger.info(ready_dic)
 	html_dic = get_html_dic(ready_dic)
 	return html_dic
 
@@ -43,12 +44,12 @@ def get_ready_dic(root, form_data):
 		name = target_el.find('name').text
 		url = target_el.find('url').text
 		picture = target_el.find('picture').text
-		price = target_el.find('price').text
-		old_price = target_el.find("param/[@name='oldprice']").text
+		price = target_el.find('price').text.split(' ')[0]
+		old_price = target_el.find("param/[@name='oldprice']").text.split(' ')[0]
 		opv = int(old_price.split('.')[0])
 		cpv = int(price.split('.')[0])
-		discount = round(((opv-cpv)/opv)*100)
-		ready_dic[group_id] = {
+		discount = -round(((opv-cpv)/opv)*100)
+		ready_dic[data_key] = {
 			'name' : name,
 			'url' : url,
 			'picture' : picture,
@@ -61,7 +62,7 @@ def get_ready_dic(root, form_data):
 	return ready_dic
 def substitute_table_components(table, value):
 	tds = table.find_all('td')
-
+	print(value)
 	tds[0].clear()
 	tds[0].append(f'\n\n{value["discount"]}%\n\n')
 	'---'
@@ -85,4 +86,4 @@ def substitute_table_components(table, value):
 
 	td4_rows[5].td.a['href'] = value["url"]
 	td4_rows[5].td.a.clear()
-	td4_rows[5].td.a.append(value["price"])
+	td4_rows[5].td.a.append(value["old_price"])
