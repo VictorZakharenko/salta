@@ -9,9 +9,14 @@
             {{ wtf.quick_form(group_ids_form) }}
         </div>
     </div>
+    <button onclick="copyToClip()">Copy html</button>
     <div>
     	{% if result_html %}
     		{{result_html|safe}}
     	{% endif %}
     </div>
+    {% if wrapped_html %}
+    <input type="text"  id="wrapped_html" style="display:none;" value="{{wrapped_html}}">
+    {% endif %}
 {% endblock %}
+

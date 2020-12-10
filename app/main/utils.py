@@ -29,8 +29,12 @@ def get_html_dic(ready_dic):
 	tables = iter(soup.find_all('table', {"class": "width296auto"}))
 	for key, value in ready_dic.items():
 		substitute_table_components(next(tables), value)
-
-	return {'plane_links_html' : soup.find('table').getText}
+	ready_html = soup.find('table').getText
+	all_a = soup.find('table').findAll('a')
+	wrap_links(all_a)
+	wrapped_html = str(soup)
+	return {'plane_links_html' : str(soup.find('table')),\
+			'wrapped_html' : wrapped_html}
 
 def get_ready_dic(root, form_data):
 	ready_dic = {}
@@ -60,6 +64,7 @@ def get_ready_dic(root, form_data):
 		current_app.logger.info([name, url, picture, price, old_price, discount])
 		current_app.logger.info('#####')
 	return ready_dic
+
 def substitute_table_components(table, value):
 	tds = table.find_all('td')
 	print(value)
@@ -87,3 +92,9 @@ def substitute_table_components(table, value):
 	td4_rows[5].td.a['href'] = value["url"]
 	td4_rows[5].td.a.clear()
 	td4_rows[5].td.a.append(value["old_price"])
+
+def wrap_links(soup_html):
+	print(type(soup_html))
+	for a in soup_html :
+		a['href'] = "{{LINK `"+f"{a['href']}" + '`}}'
+

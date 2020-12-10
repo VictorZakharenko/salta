@@ -44,3 +44,7 @@
       {% block app_content %}{% endblock %}
   </div>
 {% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="{{url_for('static',filename='js/common.js')}}"></script>
+{% endblock %}

@@ -15,6 +15,9 @@ def index():
     form = GroupIdsForm()
     if form.validate_on_submit():
         result_html = build_it(form.data)
-        return render_template('index.html', group_ids_form=form, result_html=result_html['plane_links_html'])
+        return render_template('index.html', \
+            group_ids_form=form, \
+            result_html=result_html['plane_links_html'], \
+            wrapped_html = result_html['wrapped_html'])
 
     return render_template('index.html', group_ids_form=form)
