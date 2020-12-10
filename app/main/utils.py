@@ -40,11 +40,22 @@ def get_ready_dic(root, form_data):
 	ready_dic = {}
 	for data_key, group_id in form_data.items():
 		if data_key[:-1] != 'group_id':
-			print('valim', group_id)
 			continue
 		current_app.logger.info('requests')
-		print('!!!!', group_id)
-		target_el = root.findall(f".//offer/[@group_id='{group_id}']")[0]
+		search_group_output = root.findall(f".//offer/[@group_id='{group_id}']")
+		if len(search_group_output) == 0:
+			ready_dic[data_key] = {
+				'name' : f'{group_id} НЕТ В ФИДЕ',
+				'url' : '---',
+				'picture' : 'https://image.freepik.com/free-vector/error-with-glitch-effect-screen-error-404-page-found_143407-1.jpg',
+				'price' : '---',
+				'old_price' : '---',
+				'discount' : 0
+			}
+			current_app.logger.info(f'{group_id} НЕТ В ФИДЕ')
+			current_app.logger.info('#####')
+			continue
+		target_el = search_group_output[0]
 		name = target_el.find('name').text
 		if len(name)>20:
 			name = name[:17]+'...'
@@ -63,13 +74,12 @@ def get_ready_dic(root, form_data):
 			'old_price' : old_price,
 			'discount' : discount
 		}
-		current_app.logger.info([name, url, picture, price, old_price, discount])
+		# current_app.logger.info([name, url, picture, price, old_price, discount])
 		current_app.logger.info('#####')
 	return ready_dic
 
 def substitute_table_components(table, value):
 	tds = table.find_all('td')
-	print(value)
 	tds[0].clear()
 	tds[0].append(f'\n\n{value["discount"]}%\n\n')
 	'---'
@@ -96,7 +106,6 @@ def substitute_table_components(table, value):
 	td4_rows[5].td.a.append(value["old_price"])
 
 def wrap_links(soup_html):
-	print(type(soup_html))
 	for a in soup_html :
 		a['href'] = "{{LINK `"+f"{a['href']}" + '`}}'
 
