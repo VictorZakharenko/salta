@@ -46,6 +46,8 @@ def get_ready_dic(root, form_data):
 		print('!!!!', group_id)
 		target_el = root.findall(f".//offer/[@group_id='{group_id}']")[0]
 		name = target_el.find('name').text
+		if len(name)>20:
+			name = name[:17]+'...'
 		url = target_el.find('url').text
 		picture = target_el.find('picture').text
 		price = target_el.find('price').text.split(' ')[0]
